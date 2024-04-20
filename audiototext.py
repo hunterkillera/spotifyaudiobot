@@ -29,11 +29,6 @@ def transcribe_audio(file_path, model="whisper-1"):
         )
     return transcription.text
 
-# Example usage
-if __name__ == "__main__":
-    audio_path = "output.wav"  # Path to your audio file
-    try:
-        result = transcribe_audio(audio_path)
-        print("Transcribed Text:", result)
-    except Exception as e:
-        print("Error:", e)
+audio_path = "output.wav"  # Path to your audio file
+result = transcribe_audio(audio_path)
+print(result)
