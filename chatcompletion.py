@@ -23,9 +23,9 @@ def get_chat_completion(user_prompt):
     # Define the full set of messages sent to the GPT-4 model including prior conversation context
     messages = [
         {"role": "system", "content": "You are a helpful assistant to help me give key words for getting input for Spotify API."},
-        {"role": "user", "content": "Play Taylor Swift's latest album?"},
+        {"role": "user", "content": "play the latest album by Taylor Swift"},
         {"role": "assistant", "content": "album,The Tortured Poets Department"},
-        {"role": "user", "content": "Play 21 Savage's latest album"},
+        {"role": "user", "content": "Play the latest album by 21 savage"},
         {"role": "assistant", "content": "album,American Dream"},
         {"role": "user", "content": "播放SHE的五月天"},
         {"role": "assistant", "content": "artist,SHE,song,五月天"},
@@ -33,6 +33,9 @@ def get_chat_completion(user_prompt):
         {"role": "assistant", "content": "artist,五月天,song,温柔"},
         {"role": "user", "content": "play love story"},
         {"role": "assistant", "content": "song,loves tory"},
+        {"role": "user", "content": "play some pop music"},
+        {"role": "assistant", "content": "genre,pop"},
+
 
 
 
@@ -62,4 +65,7 @@ def get_chat_completion(user_prompt):
     except Exception as e:
         print(f"An error occurred while attempting to create a chat completion: {e}")
         return None
+    
+
+print(get_chat_completion("播放周杰伦的电影里的歌曲"))
 

@@ -150,6 +150,40 @@ def play_specific_song_by_artist(artist_name, track_name):
     except spotipy.exceptions.SpotifyException as e:
         print(f"Failed to start playback for '{track_name}' by {artist_name}: {e}")
 
+#function to play specific album by specific artist
+def play_specific_album_by_artist(artist_name, album):
+    """
+    Plays a specific album by a specific artist on Spotify using Spotipy.
+    
+    Args:
+    artist_name (str): Name of the artist.
+    album (str): Name of the album to play.
+
+    Returns:
+    None: Outputs status directly to console.
+    """
+    try:
+        # Search for the artist and album by name
+        query = f"artist:{artist_name} album:{album}"
+        results = sp.search(q=query, type='album', limit=1)
+        
+        if results['albums']['items']:
+            album_id = results['albums']['items'][0]['id']
+            tracks = sp.album_tracks(album_id)
+            track_uris = [track['uri'] for track in tracks['items']]
+            
+            if track_uris:
+                # Start playback of all tracks in the album
+                sp.start_playback(uris=track_uris)
+                print(f"Playback started for the album '{album}' by {artist_name}.")
+            else:
+                print(f"No tracks found for the album '{album}' by artist {artist_name}.")
+        else:
+            print(f"Album '{album}' by artist {artist_name} not found.")
+
+    except spotipy.exceptions.SpotifyException as e:
+        print(f"Failed to start playback for the album '{album}' by {artist_name}: {e}")
+
 
 #play_specific_song_by_artist("SHE","五月天")
 #play_specific_music("Million Reasons")
