@@ -35,6 +35,9 @@ def get_chat_completion(user_prompt):
         {"role": "assistant", "content": "song,loves tory"},
         {"role": "user", "content": "play some pop music"},
         {"role": "assistant", "content": "genre,pop"},
+        {"role": "user", "content": "play album I just wanna dance by Tiffany"},
+        {"role": "assistant", "content": "artist,Tiffany,album,I just wanna dance"},
+
 
 
 

@@ -1,8 +1,9 @@
-chat_response = "artist, Taylor Swift, song, Lover"
+chat_response = "album,I Just Wanna Dance,artist,Tiffany"
+chat_response = chat_response.lower()
 chat_response = [item.strip() for item in chat_response.split(',')[1:]]
 
 #artist = chat_response.split(',')[1]
 #song = chat_response.split(',')[3]
-artist = chat_response[0]
-song = chat_response[1]
-print(chat_response,artist, song)
+artist = chat_response[2]
+song = chat_response[0]
+print(artist, song)

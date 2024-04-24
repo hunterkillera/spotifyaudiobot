@@ -150,6 +150,7 @@ def play_specific_song_by_artist(artist_name, track_name):
     except spotipy.exceptions.SpotifyException as e:
         print(f"Failed to start playback for '{track_name}' by {artist_name}: {e}")
 
+
 #function to play specific album by specific artist
 def play_specific_album_by_artist(artist_name, album):
     """
@@ -187,3 +188,5 @@ def play_specific_album_by_artist(artist_name, album):
 
 #play_specific_song_by_artist("SHE","五月天")
 #play_specific_music("Million Reasons")
+
+play_specific_album_by_artist("Taylor Swift","Speak Now")

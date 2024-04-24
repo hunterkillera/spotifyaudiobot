@@ -27,6 +27,15 @@ class RecorderApp:
         self.frame = ttk.Frame(master, padding="10 10 10 10", style='TFrame')
         self.frame.pack(fill=tk.BOTH, expand=True)
 
+        # Load and add the miaomiao image
+        try:
+            self.miaomiao_photo = ImageTk.PhotoImage(Image.open("miaomiao2.jpg").resize((100, 100)))
+            self.miaomiao_label = ttk.Label(self.frame, image=self.miaomiao_photo)
+            self.miaomiao_label.grid(column=2, row=0, rowspan=2, padx=10, pady=20, sticky='nsew')
+        except FileNotFoundError as e:
+            messagebox.showerror("Error", f"Image file not found: {e}")
+            return
+
         # Using high-quality icons
         try:
             self.record_photo = ImageTk.PhotoImage(Image.open("record_icon.png").resize((50, 50)))
@@ -46,6 +55,7 @@ class RecorderApp:
         # Grid configuration for resizing behavior
         self.frame.columnconfigure(0, weight=1)
         self.frame.columnconfigure(1, weight=1)
+        self.frame.columnconfigure(2, weight=1)  # Make sure the image column can also resize
         self.frame.rowconfigure(1, weight=1)
 
     def start_recording(self):
@@ -84,11 +94,13 @@ class RecorderApp:
         elif "skip" in chat_response.lower():
             spotify_api.skip_music()
             action_taken = "skip"
-        # play specific song
-        elif "song" in chat_response.lower() and "artist" not in chat_response.lower():
-            song = chat_response.split(',')[1].strip()
-            spotify_api.play_specific_music(song)
-            action_taken = "play_specific_song"
+        # play specific singer with the album
+        elif "album" in chat_response.lower() and "artist" in chat_response.lower():
+            chat_response = [item.strip() for item in chat_response.split(',')[1:]]
+            artist = chat_response[0]
+            album = chat_response[2]
+            spotify_api.play_specific_album_by_artist(artist, album)
+            action_taken = "play_specific_album_by_artist"
         # play specific singer with the song
         elif "song" in chat_response.lower() and "artist" in chat_response.lower():
             chat_response = [item.strip() for item in chat_response.split(',')[1:]]
@@ -96,25 +108,28 @@ class RecorderApp:
             song = chat_response[2]
             spotify_api.play_specific_song_by_artist(artist, song)
             action_taken = "play_specific_song_by_artist"
+        # play specific song
+        elif "song" in chat_response.lower():
+            song = chat_response.split(',')[1].strip()
+            spotify_api.play_specific_music(song)
+            action_taken = "play_specific_song"
         # play specific artist
         elif "artist" in chat_response.lower():
             artist = [item.strip() for item in chat_response.split(',')[1:]]
             artist = ','.join(artist)
             spotify_api.play_specific_artist(artist)
             action_taken = "play_specific_artist"
-
         #play a specific album
         elif "album" in chat_response.lower():
             album = chat_response.split(',')[1].strip()
-            spotify_api.play_specific_album(album[-1])
+            spotify_api.play_specific_album(album)
             action_taken = "play_specific_album"
-
-
         #play a specific genre
         elif "genre" in chat_response.lower():
             genre = chat_response.split(',')[1].strip()
             spotify_api.play_specific_genre(genre)
             action_taken = "play_specific_genre"
+          
         
         # Return the action taken
         return action_taken
